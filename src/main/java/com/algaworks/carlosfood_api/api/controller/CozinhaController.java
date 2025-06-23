@@ -1,7 +1,5 @@
 package com.algaworks.carlosfood_api.api.controller;
 
-import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
-import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.carlosfood_api.domain.model.Cozinha;
 import com.algaworks.carlosfood_api.domain.repository.CozinhaRepository;
 import com.algaworks.carlosfood_api.domain.service.CadastroCozinhaService;
@@ -68,19 +66,22 @@ public class CozinhaController {
     }
 
     @DeleteMapping("/{cozinhaId}")
-    public ResponseEntity<?> excluir(@PathVariable Long cozinhaId) {
-        try {
-            cadastroCozinha.remover(cozinhaId);
-            return ResponseEntity.noContent().build();
-
-        } catch (EntidadeEmUsoException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-
-        } catch (EntidadeNaoEncontradaException e) {
-            return ResponseEntity.notFound().build();
-        }
-
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluir(@PathVariable Long cozinhaId) {
+        cadastroCozinha.excluir(cozinhaId);
     }
+
+//    @DeleteMapping("/{cozinhaId}")
+//    public ResponseEntity<?> excluir(@PathVariable Long cozinhaId) {
+//        try {
+//            cadastroCozinha.remover(cozinhaId);
+//            return ResponseEntity.noContent().build();
+//        } catch (EntidadeEmUsoException e) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+//
+//        } catch (EntidadeNaoEncontradaException e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
 }
