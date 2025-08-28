@@ -2,17 +2,13 @@ package com.algaworks.carlosfood_api.domain.service;
 
 import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.carlosfood_api.domain.model.Cidade;
-import com.algaworks.carlosfood_api.domain.model.Cozinha;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.CidadeRepository;
 import com.algaworks.carlosfood_api.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CadastroCidadeService {
@@ -48,6 +44,11 @@ public class CadastroCidadeService {
         cidade.setEstado(estado);
 
         return cidadeRepository.save(cidade);
+    }
+
+    public Cidade buscarOuFalhar(Long cidadeId) {
+        return cidadeRepository.findById(cidadeId).orElseThrow(
+                () -> new EntidadeNaoEncontradaException("alguma cosaaa"));
     }
 
     public void excluir (Long cidadeId) {

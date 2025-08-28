@@ -1,13 +1,18 @@
 package com.algaworks.carlosfood_api.domain.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class EntidadeEmUsoException extends RuntimeException{
+//@ResponseStatus(HttpStatus.CONFLICT)
+public class EntidadeEmUsoException extends ResponseStatusException {
+
+    public EntidadeEmUsoException(HttpStatusCode status, String reason) {
+        super(status, reason);
+    }
 
     public EntidadeEmUsoException(String mensagem) {
-        super(mensagem);
+        this(HttpStatus.CONFLICT,  mensagem);
     }
 
 }
