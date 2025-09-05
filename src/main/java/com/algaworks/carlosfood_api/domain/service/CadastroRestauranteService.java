@@ -6,7 +6,6 @@ import com.algaworks.carlosfood_api.domain.model.Restaurante;
 import com.algaworks.carlosfood_api.domain.repository.CozinhaRepository;
 import com.algaworks.carlosfood_api.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,13 +28,15 @@ public class CadastroRestauranteService {
         return restauranteRepository.save(restaurante);
     }
 
+    public Restaurante buscarOuFalhar(Long restauranteId) {
+        return restauranteRepository.findById(restauranteId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Não existe cadastro de Restaurante de código %d ", restauranteId)
+        ));
+    }
+
     public void excluir(Long restauranteId) {
-        try {
-            restauranteRepository.deleteById(restauranteId);
-        } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format("Não existe cadastro de Restaurante de código %d", restauranteId)
-            );
-        }
+        var restaurante = buscarOuFalhar(restauranteId);
+        restauranteRepository.deleteById(restaurante.getId());
+
     }
 }

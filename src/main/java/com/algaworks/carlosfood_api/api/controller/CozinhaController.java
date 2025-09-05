@@ -33,7 +33,6 @@ public class CozinhaController {
         return cozinhaRepository.findAll();
     }
 
-
     @GetMapping("/{cozinhaId}")
     public Cozinha buscar(@PathVariable Long cozinhaId) {
         return cadastroCozinha.buscarOuFalhar(cozinhaId);

@@ -13,6 +13,9 @@ import java.util.List;
 @Service
 public class CadastroCidadeService {
 
+    private static final String MSG_ENTIDADE_NAO_ENCONTRADA = "Não existe cadastro de cidade de código %d ";
+    private static final String MSG_ENTIDADE_EM_USO = "";
+
     @Autowired
     private CidadeRepository cidadeRepository;
 
@@ -24,13 +27,6 @@ public class CadastroCidadeService {
 
     public List<Cidade> listar() {
         return cidadeRepository.findAll();
-    }
-
-    public Cidade buscar (Long cidadeId) {
-        return cidadeRepository.findById(cidadeId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format("Não existe cadastro de cidade de código %d " , cidadeId)
-                ));
     }
 
 
@@ -48,11 +44,13 @@ public class CadastroCidadeService {
 
     public Cidade buscarOuFalhar(Long cidadeId) {
         return cidadeRepository.findById(cidadeId).orElseThrow(
-                () -> new EntidadeNaoEncontradaException("alguma cosaaa"));
+                () -> new EntidadeNaoEncontradaException(
+                        String.format(MSG_ENTIDADE_NAO_ENCONTRADA, cidadeId)
+                ));
     }
 
     public void excluir (Long cidadeId) {
-        var cidade = buscar(cidadeId);
+        var cidade = buscarOuFalhar(cidadeId);
         cidadeRepository.delete(cidade);
     }
 }
