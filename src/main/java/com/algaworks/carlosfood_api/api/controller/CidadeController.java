@@ -38,13 +38,9 @@ public class CidadeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Cidade cidade) {
-        try {
-            cadastroCidade.salvar(cidade);
-            return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
-        } catch (EntidadeNaoEncontradaException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cidade salvar(@RequestBody Cidade cidade) {
+        return cadastroCidade.salvar(cidade);
     }
 
     @PutMapping("/{cidadeId}")
