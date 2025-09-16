@@ -1,6 +1,7 @@
 package com.algaworks.carlosfood_api.api.controller;
 
 import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.carlosfood_api.domain.exception.NegocioException;
 import com.algaworks.carlosfood_api.domain.model.Restaurante;
 import com.algaworks.carlosfood_api.domain.repository.CozinhaRepository;
 import com.algaworks.carlosfood_api.domain.repository.RestauranteRepository;
@@ -48,16 +49,24 @@ public class RestauranteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurante salvar(@RequestBody Restaurante restaurante) {
-        return cadastroRestaurante.salvar(restaurante);
+        try {
+            return cadastroRestaurante.salvar(restaurante);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @PutMapping("/{restauranteId}")
     public Restaurante actualizar (@RequestBody Restaurante restaurante, @PathVariable Long restauranteId) {
 
-       Restaurante restauranteActual = cadastroRestaurante.buscarOuFalhar(restauranteId);
-
+        Restaurante restauranteActual = cadastroRestaurante.buscarOuFalhar(restauranteId);
         BeanUtils.copyProperties(restaurante, restauranteActual, "id", "formasPagamento", "endereco", "dataCadastro","produto");
-        return cadastroRestaurante.salvar(restauranteActual);
+
+        try {
+            return cadastroRestaurante.salvar(restauranteActual);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
 
     }
 

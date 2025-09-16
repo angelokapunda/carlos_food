@@ -1,6 +1,7 @@
 package com.algaworks.carlosfood_api.api.controller;
 
 import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.carlosfood_api.domain.exception.NegocioException;
 import com.algaworks.carlosfood_api.domain.model.Cidade;
 import com.algaworks.carlosfood_api.domain.service.CadastroCidadeService;
 import org.springframework.beans.BeanUtils;
@@ -40,15 +41,22 @@ public class CidadeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cidade salvar(@RequestBody Cidade cidade) {
-        return cadastroCidade.salvar(cidade);
+        try {
+            return cadastroCidade.salvar(cidade);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @PutMapping("/{cidadeId}")
     public Cidade actualizar(@RequestBody Cidade cidade, @PathVariable Long cidadeId) {
         Cidade cidadeActual = cadastroCidade.buscarOuFalhar(cidadeId);
-
         BeanUtils.copyProperties(cidade, cidadeActual, "id");
-        return cadastroCidade.salvar(cidadeActual);
+        try {
+            return cadastroCidade.salvar(cidadeActual);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
 
 

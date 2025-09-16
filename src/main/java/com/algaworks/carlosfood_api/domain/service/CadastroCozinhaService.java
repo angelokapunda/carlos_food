@@ -21,7 +21,7 @@ public class CadastroCozinhaService {
 
     public void excluir(Long cozinhaId) {
         var cozinha = buscarOuFalhar(cozinhaId);
-        cozinhaRepository.deleteById(cozinha.getId());
+        cozinhaRepository.delete(cozinha);
     }
 
     public Cozinha buscarOuFalhar(Long cozinhaId) {
