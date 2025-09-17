@@ -1,7 +1,5 @@
 package com.algaworks.carlosfood_api.api.controller;
 
-import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
-import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.EstadoRepository;
 import com.algaworks.carlosfood_api.domain.service.CadastroEstadoService;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/estados")

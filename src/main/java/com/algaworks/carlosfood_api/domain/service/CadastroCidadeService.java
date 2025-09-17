@@ -1,6 +1,7 @@
 package com.algaworks.carlosfood_api.domain.service;
 
-import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.carlosfood_api.domain.exception.CidadeNaoEncotradoException;
+import com.algaworks.carlosfood_api.domain.exception.EstadoNaoEncotradoException;
 import com.algaworks.carlosfood_api.domain.model.Cidade;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.CidadeRepository;
@@ -13,8 +14,7 @@ import java.util.List;
 @Service
 public class CadastroCidadeService {
 
-    private static final String MSG_ENTIDADE_NAO_ENCONTRADA = "Não existe cadastro de cidade de código %d ";
-    private static final String MSG_ENTIDADE_EM_USO = "";
+    private static final String MSG_ENTIDADE_EM_USO = "A cidade de código %d está em uso";
 
     @Autowired
     private CidadeRepository cidadeRepository;
@@ -34,8 +34,7 @@ public class CadastroCidadeService {
         Long estadoId = cidade.getEstado().getId();
 
         Estado estado = estadoRepository.findById(estadoId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format("Não existe cadastro de estado com código %d", estadoId)));
+                .orElseThrow(() -> new EstadoNaoEncotradoException(estadoId));
 
         cidade.setEstado(estado);
 
@@ -44,9 +43,7 @@ public class CadastroCidadeService {
 
     public Cidade buscarOuFalhar(Long cidadeId) {
         return cidadeRepository.findById(cidadeId).orElseThrow(
-                () -> new EntidadeNaoEncontradaException(
-                        String.format(MSG_ENTIDADE_NAO_ENCONTRADA, cidadeId)
-                ));
+                () -> new CidadeNaoEncotradoException(cidadeId));
     }
 
     public void excluir (Long cidadeId) {
