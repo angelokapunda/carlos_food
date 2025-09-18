@@ -1,12 +1,14 @@
 package com.algaworks.carlosfood_api.domain.service;
 
 import com.algaworks.carlosfood_api.domain.exception.CidadeNaoEncotradoException;
+import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
 import com.algaworks.carlosfood_api.domain.exception.EstadoNaoEncotradoException;
 import com.algaworks.carlosfood_api.domain.model.Cidade;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.CidadeRepository;
 import com.algaworks.carlosfood_api.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,7 +49,13 @@ public class CadastroCidadeService {
     }
 
     public void excluir (Long cidadeId) {
-        var cidade = buscarOuFalhar(cidadeId);
-        cidadeRepository.delete(cidade);
+        try {
+            var cidade = buscarOuFalhar(cidadeId);
+            cidadeRepository.delete(cidade);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(
+                    String.format(MSG_ENTIDADE_EM_USO, cidadeId)
+            );
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.algaworks.carlosfood_api.api.exceptionHandler;
 
+import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
 import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.carlosfood_api.domain.exception.NegocioException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -20,6 +22,15 @@ public class ApiExceptionHandler {
                 .mensagem(e.getMessage())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problem);
+    }
+
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> tratarDataIntegrityViolationException(EntidadeEmUsoException e) {
+        Problem problem = Problem.builder()
+                .dataHora(LocalDateTime.now())
+                .mensagem(e.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(problem);
     }
 
     @ExceptionHandler(NegocioException.class)
