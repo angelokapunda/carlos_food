@@ -64,21 +64,4 @@ public class EstadoController {
         cadastroEstado.excluir(estadoId);
     }
 
-    @ExceptionHandler(EntidadeNaoEncontradaException.class)
-    public ResponseEntity<?> tratarEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e) {
-        Problem problem = Problem.builder()
-                .dataHora(LocalDateTime.now())
-                .mensagem(e.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problem);
-    }
-
-    @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<?> tratarNegocioException(NegocioException e) {
-        Problem problem = Problem.builder()
-                .dataHora(LocalDateTime.now())
-                .mensagem(e.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
-    }
 }
