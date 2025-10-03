@@ -197,7 +197,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
                 .map(fieldError -> Problem.Field.builder()
-                        .nome(fieldError.getObjectName())
+                        .nome(fieldError.getField())
                         .userMessager(fieldError.getDefaultMessage())
                         .build())
                 .toList();
