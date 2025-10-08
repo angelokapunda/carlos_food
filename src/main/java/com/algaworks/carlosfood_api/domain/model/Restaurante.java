@@ -1,5 +1,6 @@
 package com.algaworks.carlosfood_api.domain.model;
 
+import com.algaworks.carlosfood_api.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
@@ -37,16 +38,17 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(groups = Groups.CadastroRestaurante.class)
     private String nome;
 
-    @PositiveOrZero
+    @PositiveOrZero(groups = Groups.CadastroRestaurante.class)
     @Column(name = "taxa_frete")
     private BigDecimal taxaFrete;
 
     //@JsonIgnore
-    @NotNull
+
     @Valid
+    @NotNull(groups = Groups.CadastroRestaurante.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer")
     private Cozinha cozinha;
