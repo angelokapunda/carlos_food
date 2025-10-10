@@ -6,6 +6,7 @@ import com.algaworks.carlosfood_api.domain.exception.NegocioException;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.EstadoRepository;
 import com.algaworks.carlosfood_api.domain.service.CadastroEstadoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class EstadoController {
     }
 
     @PutMapping("/{estadoId}")
-    public Estado actualizar (@RequestBody Estado estado, @PathVariable Long estadoId) {
+    public Estado actualizar (@RequestBody @Valid Estado estado, @PathVariable Long estadoId) {
 
         Estado estadoActual = cadastroEstado.buscarOuFalhar(estadoId);
 
