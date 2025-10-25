@@ -1,4 +1,4 @@
-package com.algaworks.carlosfood_api;
+package com.algaworks.carlosfood_api.core.validation;
 
 public interface Groups {
 

@@ -1,6 +1,6 @@
 package com.algaworks.carlosfood_api.domain.model;
 
-import com.algaworks.carlosfood_api.Groups;
+import com.algaworks.carlosfood_api.core.validation.Groups;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

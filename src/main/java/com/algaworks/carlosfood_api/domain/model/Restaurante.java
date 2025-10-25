@@ -1,6 +1,6 @@
 package com.algaworks.carlosfood_api.domain.model;
 
-import com.algaworks.carlosfood_api.Groups;
+import com.algaworks.carlosfood_api.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
@@ -42,6 +42,7 @@ public class Restaurante {
     @NotBlank
     private String nome;
 
+    @NotNull
     @PositiveOrZero
     @Column(name = "taxa_frete")
     private BigDecimal taxaFrete;
