@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -25,23 +23,21 @@ class CadastroCozinhaIntegrationTests {
 	private CadastroCozinhaService cozinhaService;
 
 	@Test
-	public void testarCadastroCozinhaComSucesso() {
+	public void deveAtribuirId_QuandoCadastrarCozinhaComDadosCorrertos() {
 		// Cenário
 		Cozinha novaCozinha = new Cozinha();
 		novaCozinha.setNome("Brasilleiraa");
 
 		//Acção
-
 		novaCozinha = cozinhaService.salvar(novaCozinha);
 
 		// Validação
-
 		assertThat(novaCozinha).isNotNull();
 		assertThat(novaCozinha.getId()).isNotNull();
 	}
 
 	@Test
-	public void testarCadastroCozinhaSemNome() {
+	public void deveFalhar_QuandoCadastrarCozinhaSemNome() {
 
 		Cozinha cozinha = new Cozinha();
 		cozinha.setNome(null);
@@ -51,9 +47,5 @@ class CadastroCozinhaIntegrationTests {
 		});
 		assertThat(erroEsperado).isNotNull();
 	}
-
-
-
-
 
 }
