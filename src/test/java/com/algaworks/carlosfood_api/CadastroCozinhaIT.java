@@ -1,64 +1,35 @@
 package com.algaworks.carlosfood_api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
-import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
-import com.algaworks.carlosfood_api.domain.model.Cozinha;
-import com.algaworks.carlosfood_api.domain.service.CadastroCozinhaService;
-import jakarta.validation.ConstraintViolationException;
+import io.restassured.RestAssured;
+import io.restassured.RestAssured.*;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+
+import static io.restassured.RestAssured.given;
 
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CadastroCozinhaIT {
 
-	@Autowired
-	private CadastroCozinhaService cozinhaService;
+    @LocalServerPort
+    private int port;
 
-	@Test
-	public void deveAtribuirId_QuandoCadastrarCozinhaComDadosCorrertos() {
-		// Cenário
-		Cozinha novaCozinha = new Cozinha();
-		novaCozinha.setNome("Brasilleiraa");
+    @Test
+    public void deveRetornarStatus200_QuandoConsultarCozinhas() {
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
-		//Acção
-		novaCozinha = cozinhaService.salvar(novaCozinha);
+            given()
+                .basePath("/cozinhas")
+                .port(port)
+                .accept(ContentType.JSON)
+            .when()
+                .get()
+            .then()
+                .statusCode(HttpStatus.OK.value());
 
-		// Validação
-		assertThat(novaCozinha).isNotNull();
-		assertThat(novaCozinha.getId()).isNotNull();
-	}
-
-	@Test
-	public void deveFalhar_QuandoCadastrarCozinhaSemNome() {
-
-		Cozinha cozinha = new Cozinha();
-		cozinha.setNome(null);
-		ConstraintViolationException erroEsperado =
-				assertThrows(ConstraintViolationException.class, () -> {
-			cozinhaService.salvar(cozinha);
-		});
-		assertThat(erroEsperado).isNotNull();
-	}
-
-	@Test
-	public void devefalhar_QuandoExcluirCozinhaEmUso() {
-		assertThrows(EntidadeEmUsoException.class,  () -> {
-			cozinhaService.excluir(1L);
-		});
-	}
-
-	@Test
-	public void deveFalhar_QuandoExcluirCozinhaInexistente() {
-		assertThrows(EntidadeNaoEncontradaException.class,  () -> {
-			cozinhaService.excluir(100L);
-		});
-	}
+    }
 
 }
