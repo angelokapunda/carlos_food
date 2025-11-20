@@ -3,21 +3,20 @@ package com.algaworks.carlosfood_api;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-
+import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
+import com.algaworks.carlosfood_api.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.carlosfood_api.domain.model.Cozinha;
 import com.algaworks.carlosfood_api.domain.service.CadastroCozinhaService;
 import jakarta.validation.ConstraintViolationException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-class CadastroCozinhaIntegrationTests {
+class CadastroCozinhaIT {
 
 	@Autowired
 	private CadastroCozinhaService cozinhaService;
@@ -46,6 +45,20 @@ class CadastroCozinhaIntegrationTests {
 			cozinhaService.salvar(cozinha);
 		});
 		assertThat(erroEsperado).isNotNull();
+	}
+
+	@Test
+	public void devefalhar_QuandoExcluirCozinhaEmUso() {
+		assertThrows(EntidadeEmUsoException.class,  () -> {
+			cozinhaService.excluir(1L);
+		});
+	}
+
+	@Test
+	public void deveFalhar_QuandoExcluirCozinhaInexistente() {
+		assertThrows(EntidadeNaoEncontradaException.class,  () -> {
+			cozinhaService.excluir(100L);
+		});
 	}
 
 }
