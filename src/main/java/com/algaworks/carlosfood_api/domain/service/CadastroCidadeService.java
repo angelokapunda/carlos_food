@@ -7,6 +7,7 @@ import com.algaworks.carlosfood_api.domain.model.Cidade;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.CidadeRepository;
 import com.algaworks.carlosfood_api.domain.repository.EstadoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -31,15 +32,13 @@ public class CadastroCidadeService {
         return cidadeRepository.findAll();
     }
 
-
+    @Transactional
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();
 
         Estado estado = estadoRepository.findById(estadoId)
                 .orElseThrow(() -> new EstadoNaoEncotradoException(estadoId));
-
         cidade.setEstado(estado);
-
         return cidadeRepository.save(cidade);
     }
 
@@ -48,6 +47,7 @@ public class CadastroCidadeService {
                 () -> new CidadeNaoEncotradoException(cidadeId));
     }
 
+    @Transactional
     public void excluir (Long cidadeId) {
         try {
             var cidade = buscarOuFalhar(cidadeId);

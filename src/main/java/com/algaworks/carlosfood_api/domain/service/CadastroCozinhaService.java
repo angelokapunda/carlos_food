@@ -4,6 +4,7 @@ import com.algaworks.carlosfood_api.domain.exception.CozinhaNaoEncontradoExcepti
 import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
 import com.algaworks.carlosfood_api.domain.model.Cozinha;
 import com.algaworks.carlosfood_api.domain.repository.CozinhaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ public class CadastroCozinhaService {
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
+    @Transactional
     public Cozinha salvar(Cozinha cozinha) {
         return cozinhaRepository.save(cozinha);
     }
 
+    @Transactional
     public void excluir(Long cozinhaId) {
         try {
             var cozinha = buscarOuFalhar(cozinhaId);

@@ -7,6 +7,7 @@ import com.algaworks.carlosfood_api.domain.model.Cozinha;
 import com.algaworks.carlosfood_api.domain.model.Restaurante;
 import com.algaworks.carlosfood_api.domain.repository.CozinhaRepository;
 import com.algaworks.carlosfood_api.domain.repository.RestauranteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class CadastroRestauranteService {
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
+    @Transactional
     public Restaurante salvar (Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
         Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
@@ -35,6 +37,7 @@ public class CadastroRestauranteService {
         return restauranteRepository.findById(restauranteId).orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
     }
 
+    @Transactional
     public void excluir(Long restauranteId) {
         try {
             var restaurante = buscarOuFalhar(restauranteId);
@@ -44,6 +47,5 @@ public class CadastroRestauranteService {
                     String.format(MSG_ENTIDADE_EM_USO, restauranteId)
             );
         }
-
     }
 }

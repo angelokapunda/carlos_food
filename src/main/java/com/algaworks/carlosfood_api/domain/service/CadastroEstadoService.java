@@ -4,6 +4,7 @@ import com.algaworks.carlosfood_api.domain.exception.EntidadeEmUsoException;
 import com.algaworks.carlosfood_api.domain.exception.EstadoNaoEncotradoException;
 import com.algaworks.carlosfood_api.domain.model.Estado;
 import com.algaworks.carlosfood_api.domain.repository.EstadoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,12 @@ public class CadastroEstadoService {
     }
 
 
+    @Transactional
     public Estado salvar ( Estado estado) {
         return estadoRepository.save(estado);
     }
 
+    @Transactional
     public void excluir (Long estadoId) {
         try {
             var estado = buscarOuFalhar(estadoId);
