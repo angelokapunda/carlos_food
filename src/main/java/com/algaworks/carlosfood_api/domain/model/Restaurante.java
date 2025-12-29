@@ -59,7 +59,7 @@ public class Restaurante {
     @JsonIgnore
     private Endereco endereco;
 
-    //@JsonIgnore
+    @JsonIgnore
     @CreationTimestamp
     @Column(nullable = false, columnDefinition ="datetime")
     private OffsetDateTime dataCadastro;
@@ -68,7 +68,7 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
 
-    //@JsonIgnore
+    @JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition ="datetime")
     private OffsetDateTime dataAtualizacao;
