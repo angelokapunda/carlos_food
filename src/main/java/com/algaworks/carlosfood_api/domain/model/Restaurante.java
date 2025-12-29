@@ -27,6 +27,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +48,10 @@ public class Restaurante {
     @Column(name = "taxa_frete")
     private BigDecimal taxaFrete;
 
-    //@JsonIgnore
-
     @Valid
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("hibernateLazyInitializer")
+    @ManyToOne
+    @JsonIgnoreProperties(value = "nome", allowGetters = true)
     @ConvertGroup(to = Groups.CozinhaId.class)
     private Cozinha cozinha;
 
@@ -60,19 +59,19 @@ public class Restaurante {
     @JsonIgnore
     private Endereco endereco;
 
-    @JsonIgnore
+    //@JsonIgnore
     @CreationTimestamp
     @Column(nullable = false, columnDefinition ="datetime")
-    private LocalDateTime dataCadastro;
+    private OffsetDateTime dataCadastro;
 
     @JsonIgnore
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
 
-    @JsonIgnore
+    //@JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition ="datetime")
-    private LocalDateTime dataAtualizacao;
+    private OffsetDateTime dataAtualizacao;
 
     @JsonIgnore
     @ManyToMany
