@@ -80,5 +80,75 @@ public class Restaurante {
     inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
     private List<FormaPagamento> formasPagamento = new ArrayList<>();
 
+    public @Valid @NotNull @ConvertGroup(to = Groups.CozinhaId.class) Cozinha getCozinha() {
+        return cozinha;
+    }
 
+    public void setCozinha(@Valid @NotNull @ConvertGroup(to = Groups.CozinhaId.class) Cozinha cozinha) {
+        this.cozinha = cozinha;
+    }
+
+    public OffsetDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public OffsetDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(OffsetDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<FormaPagamento> getFormasPagamento() {
+        return formasPagamento;
+    }
+
+    public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
+        this.formasPagamento = formasPagamento;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotBlank String getNome() {
+        return nome;
+    }
+
+    public void setNome(@NotBlank String nome) {
+        this.nome = nome;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    public @NotNull @PositiveOrZero BigDecimal getTaxaFrete() {
+        return taxaFrete;
+    }
+
+    public void setTaxaFrete(@NotNull @PositiveOrZero BigDecimal taxaFrete) {
+        this.taxaFrete = taxaFrete;
+    }
 }

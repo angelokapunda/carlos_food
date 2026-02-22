@@ -32,4 +32,27 @@ public class Cozinha {
     @OneToMany(mappedBy = "cozinha")
     private List<Restaurante> restaurantes = new ArrayList<>();
 
+    public @NotNull(groups = Groups.CozinhaId.class) Long getId() {
+        return id;
+    }
+
+    public void setId(@NotNull(groups = Groups.CozinhaId.class) Long id) {
+        this.id = id;
+    }
+
+    public @NotBlank String getNome() {
+        return nome;
+    }
+
+    public void setNome(@NotBlank String nome) {
+        this.nome = nome;
+    }
+
+    public List<Restaurante> getRestaurantes() {
+        return restaurantes;
+    }
+
+    public void setRestaurantes(List<Restaurante> restaurantes) {
+        this.restaurantes = restaurantes;
+    }
 }
