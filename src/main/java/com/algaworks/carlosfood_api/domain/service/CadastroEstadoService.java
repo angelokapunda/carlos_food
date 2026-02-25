@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CadastroEstadoService {
 
@@ -41,6 +43,10 @@ public class CadastroEstadoService {
                     String.format(MSG_ENTIDADE_EM_USO, estadoId)
             );
         }
+    }
+
+    public List<Estado> listar() {
+        return estadoRepository.findAll();
     }
 
     public Estado buscarOuFalhar(Long estadoId) {

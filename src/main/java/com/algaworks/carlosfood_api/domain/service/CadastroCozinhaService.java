@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CadastroCozinhaService {
 
@@ -33,6 +35,10 @@ public class CadastroCozinhaService {
             );
         }
 
+    }
+
+    public List<Cozinha> listar() {
+        return cozinhaRepository.findAll();
     }
 
     public Cozinha buscarOuFalhar(Long cozinhaId) {

@@ -30,4 +30,28 @@ public class Cidade {
     @ManyToOne
     @ConvertGroup(to = Groups.CidadeId.class)
     private Estado estado;
+
+    public @Valid @NotNull @ConvertGroup(to = Groups.CidadeId.class) Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(@Valid @NotNull @ConvertGroup(to = Groups.CidadeId.class) Estado estado) {
+        this.estado = estado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotBlank String getNome() {
+        return nome;
+    }
+
+    public void setNome(@NotBlank String nome) {
+        this.nome = nome;
+    }
 }

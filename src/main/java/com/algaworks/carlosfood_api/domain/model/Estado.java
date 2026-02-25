@@ -23,4 +23,19 @@ public class Estado {
     @NotBlank
     private String nome;
 
+    public @NotNull(groups = Groups.CidadeId.class) Long getId() {
+        return id;
+    }
+
+    public void setId(@NotNull(groups = Groups.CidadeId.class) Long id) {
+        this.id = id;
+    }
+
+    public @NotBlank String getNome() {
+        return nome;
+    }
+
+    public void setNome(@NotBlank String nome) {
+        this.nome = nome;
+    }
 }

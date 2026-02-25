@@ -18,14 +18,14 @@ public class RestauranteInput {
 
     @Valid
     @NotNull
-    private CozinhaInput cozinha;
+    private CozinhaIdInput cozinha;
 
 
-    public CozinhaInput getCozinha() {
+    public CozinhaIdInput getCozinha() {
         return cozinha;
     }
 
-    public void setCozinha(CozinhaInput cozinha) {
+    public void setCozinha(CozinhaIdInput cozinha) {
         this.cozinha = cozinha;
     }
 
