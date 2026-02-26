@@ -52,6 +52,7 @@ public class CadastroCidadeService {
         try {
             var cidade = buscarOuFalhar(cidadeId);
             cidadeRepository.delete(cidade);
+            cidadeRepository.flush();
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                     String.format(MSG_ENTIDADE_EM_USO, cidadeId)

@@ -29,6 +29,7 @@ public class CadastroCozinhaService {
         try {
             var cozinha = buscarOuFalhar(cozinhaId);
             cozinhaRepository.delete(cozinha);
+            cozinhaRepository.flush();
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                     String.format(MSG_ENTIDADE_EM_USO, cozinhaId)
