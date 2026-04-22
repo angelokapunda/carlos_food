@@ -1,6 +1,5 @@
 package com.algaworks.carlosfood_api.domain.model;
 
-import com.algaworks.carlosfood_api.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
@@ -14,11 +13,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.groups.ConvertGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -52,6 +46,8 @@ public class Restaurante {
     @JsonIgnore
     private Endereco endereco;
 
+    private Boolean ativo = Boolean.TRUE;
+
     @JsonIgnore
     @CreationTimestamp
     @Column(nullable = false, columnDefinition ="datetime")
@@ -73,75 +69,10 @@ public class Restaurante {
     inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
     private List<FormaPagamento> formasPagamento = new ArrayList<>();
 
-    public @Valid @NotNull @ConvertGroup(to = Groups.CozinhaId.class) Cozinha getCozinha() {
-        return cozinha;
-    }
-
-    public void setCozinha(@Valid @NotNull @ConvertGroup(to = Groups.CozinhaId.class) Cozinha cozinha) {
-        this.cozinha = cozinha;
-    }
-
-    public OffsetDateTime getDataAtualizacao() {
-        return dataAtualizacao;
-    }
-
-    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
-        this.dataAtualizacao = dataAtualizacao;
-    }
-
-    public OffsetDateTime getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(OffsetDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public List<FormaPagamento> getFormasPagamento() {
-        return formasPagamento;
-    }
-
-    public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
-        this.formasPagamento = formasPagamento;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public @NotBlank String getNome() {
-        return nome;
-    }
-
-    public void setNome(@NotBlank String nome) {
-        this.nome = nome;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
-    public @NotNull @PositiveOrZero BigDecimal getTaxaFrete() {
-        return taxaFrete;
-    }
-
-    public void setTaxaFrete(@NotNull @PositiveOrZero BigDecimal taxaFrete) {
-        this.taxaFrete = taxaFrete;
+   public void ativar() {
+       this.ativo = true;
+   }
+    public void inativar() {
+        this.ativo = false;
     }
 }
