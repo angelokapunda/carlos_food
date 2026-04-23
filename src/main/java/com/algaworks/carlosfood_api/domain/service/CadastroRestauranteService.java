@@ -23,18 +23,26 @@ public class CadastroRestauranteService {
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
+    @Autowired
+    private CadastroCidadeService cidadeService;
+
     @Transactional
     public Restaurante salvar (Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
+        Long cidadeId = restaurante.getEndereco().getCidade().getId();
+
+        var cidade = cidadeService.buscarOuFalhar(cidadeId);
         Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
                 .orElseThrow(() -> new CozinhaNaoEncontradoException(cozinhaId));
 
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
         return restauranteRepository.save(restaurante);
     }
 
     public Restaurante buscarOuFalhar(Long restauranteId) {
-        return restauranteRepository.findById(restauranteId).orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
+        return restauranteRepository.findById(restauranteId).orElseThrow(
+                () -> new RestauranteNaoEncontradoException(restauranteId));
     }
 
     @Transactional

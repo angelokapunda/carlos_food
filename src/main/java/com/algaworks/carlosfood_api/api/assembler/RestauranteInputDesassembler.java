@@ -1,6 +1,7 @@
 package com.algaworks.carlosfood_api.api.assembler;
 
 import com.algaworks.carlosfood_api.api.model.input.RestauranteInput;
+import com.algaworks.carlosfood_api.domain.model.Cidade;
 import com.algaworks.carlosfood_api.domain.model.Cozinha;
 import com.algaworks.carlosfood_api.domain.model.Restaurante;
 import org.aspectj.asm.IModelFilter;
@@ -22,6 +23,9 @@ public class RestauranteInputDesassembler {
         // Para evitar  o erro - Caused by: org.hibernate.HibernateException: identifier of an instance of
         // com.algaworks.carlosfood_api.domain.model.Cozinha was altered from 2 to 1.
         restaurante.setCozinha(new Cozinha());
+        if (restaurante.getEndereco() != null) {
+            restaurante.getEndereco().setCidade(new Cidade());
+        }
 
         modelMapper.map(restauranteInput, restaurante);
     }
