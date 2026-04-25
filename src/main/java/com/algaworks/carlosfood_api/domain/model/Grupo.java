@@ -26,7 +26,7 @@ public class Grupo {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupi_id"),
+    @JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),
     inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     List<Permissao> permissoes = new ArrayList<>();
 
